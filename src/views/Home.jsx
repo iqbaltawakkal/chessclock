@@ -1,7 +1,8 @@
-import React from "react";
-import { MdPlayArrow, MdReplay, MdSettings } from "react-icons/md";
+import React, { useState } from "react";
+import { MdPlayArrow, MdReplay, MdSettings, MdPause } from "react-icons/md";
 
 const Home = () => {
+  const [isPaused, setIsPaused] = useState(false);
   return (
     <>
       <main>
@@ -13,8 +14,11 @@ const Home = () => {
               </button>
             </div>
             <div className="bg-white flex-grow-0 flex space-x-14 justify-center text-2xl border-2 border-dashed border-gray-200 rounded-lg px-4 text-center text-gray-400">
-              <button className="p-2 m-2 focus:outline-none ">
-                <MdPlayArrow></MdPlayArrow>
+              <button
+                onClick={() => setIsPaused(!isPaused)}
+                className="p-2 m-2 focus:outline-none "
+              >
+                {isPaused ? <MdPause></MdPause> : <MdPlayArrow></MdPlayArrow>}
               </button>
               <button className="p-2 m-2 focus:outline-none ">
                 <MdSettings></MdSettings>
