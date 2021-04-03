@@ -11,6 +11,7 @@ module.exports = {
       fontWeight: ["hover", "focus"],
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+        digital: ["Digital"],
       },
     },
   },
