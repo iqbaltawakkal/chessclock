@@ -7,8 +7,9 @@ const Home = () => {
   const intervalTime = 100;
   const increment = 0;
   const [isPaused, setIsPaused] = useState(false);
+  const [isEnd, setIsEnd] = useState(false);
   const [onTicking, setOnTicking] = useState("");
-  const [timerTop, setTimerTop] = useState(120000);
+  const [timerTop, setTimerTop] = useState(60000);
   const [timerBottom, setTimerBottom] = useState(2200);
 
   const timerTopAction = () => {
@@ -60,6 +61,7 @@ const Home = () => {
     if (timerTop <= 0 || timerBottom <= 0) {
       clearInterval(intervalTop);
       clearInterval(intervalBottom);
+      setIsEnd(true);
     }
   }, [timerTop, timerBottom]);
 
@@ -70,13 +72,13 @@ const Home = () => {
           <div className="min-h-screen py-8 px-4 flex flex-col space-y-4 bg-gray-100">
             <div className="flex-grow relative">
               <button
-                disabled={onTicking === "top" || isPaused}
+                disabled={onTicking === "top" || isPaused || isEnd}
                 className={`block bg-white font-digital text-gray-600 text-9xl text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden ${
                   timerTop <= 0 && "bg-red-400"
                 }`}
                 onClick={() => timerBottomAction()}
               >
-                {timerTop > 60000 && getMinutes(timerTop) + ":"}
+                {timerTop >= 60000 && getMinutes(timerTop) + ":"}
                 {getSeconds(timerTop)}
               </button>
             </div>
@@ -97,13 +99,13 @@ const Home = () => {
             </div>
             <div className="flex-grow relative ">
               <button
-                disabled={onTicking === "bottom" || isPaused}
+                disabled={onTicking === "bottom" || isPaused || isEnd}
                 className={`block bg-white font-digital text-gray-600 text-9xl text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden ${
                   timerBottom <= 0 && "bg-red-400"
                 }`}
                 onClick={() => timerTopAction()}
               >
-                {timerBottom > 60000 && getMinutes(timerBottom) + ":"}
+                {timerBottom >= 60000 && getMinutes(timerBottom) + ":"}
                 {getSeconds(timerBottom)}
               </button>
             </div>
