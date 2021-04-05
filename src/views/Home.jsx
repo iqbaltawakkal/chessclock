@@ -70,7 +70,7 @@ const Home = () => {
           <div className="min-h-screen py-8 px-4 flex flex-col space-y-4 bg-gray-100">
             <div className="flex-grow relative">
               <button
-                disabled={onTicking === "top" && isPaused}
+                disabled={onTicking === "top" || isPaused}
                 className={`block bg-white font-digital text-gray-600 text-9xl text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden ${
                   timerTop <= 0 && "bg-red-400"
                 }`}
@@ -97,7 +97,7 @@ const Home = () => {
             </div>
             <div className="flex-grow relative ">
               <button
-                disabled={onTicking === "bottom" && isPaused}
+                disabled={onTicking === "bottom" || isPaused}
                 className={`block bg-white font-digital text-gray-600 text-9xl text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden ${
                   timerBottom <= 0 && "bg-red-400"
                 }`}
