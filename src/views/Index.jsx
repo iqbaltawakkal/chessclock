@@ -30,6 +30,12 @@ const Home = () => {
     }, intervalTime);
   };
 
+  const restart = () => {
+    setTimerTop(60000);
+    setTimerBottom(2200);
+    setIsEnd(false);
+  };
+
   const getMinutes = (time) => {
     return Math.floor(time / 60000);
   };
@@ -68,45 +74,52 @@ const Home = () => {
   return (
     <>
       <main>
-        <div className="max-w-lg mx-auto  ">
+        <div className="max-w-lg mx-auto">
           <div className="min-h-screen py-8 px-4 flex flex-col space-y-4 bg-gray-100">
             <div className="flex-grow relative">
               <button
                 disabled={onTicking === "top" || isPaused || isEnd}
-                className={`block bg-white font-digital text-gray-600 text-9xl text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden ${
+                className={`block bg-white  text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden  ${
                   timerTop <= 0 && "bg-red-400"
                 }`}
                 onClick={() => timerBottomAction()}
               >
-                {timerTop >= 60000 && getMinutes(timerTop) + ":"}
-                {getSeconds(timerTop)}
+                <span className="block font-digital text-gray-600 text-9xl transform rotate-90">
+                  {timerTop >= 60000 && getMinutes(timerTop) + ":"}
+                  {getSeconds(timerTop)}
+                </span>
               </button>
             </div>
             <div className="bg-white flex-grow-0 flex space-x-14 justify-center text-2xl border border-gray-200 rounded-lg px-4 text-center text-gray-400">
               <button
                 disabled={!onTicking}
                 onClick={() => setIsPaused(!isPaused)}
-                className="p-2 m-2 focus:outline-none "
+                className="p-2 m-2 focus:outline-none"
               >
                 {isPaused ? <MdPlayArrow></MdPlayArrow> : <MdPause></MdPause>}
               </button>
-              <button className="p-2 m-2 focus:outline-none ">
+              <button className="p-2 m-2 focus:outline-none">
                 <MdSettings></MdSettings>
               </button>
-              <button className="p-2 m-2 focus:outline-none ">
+              <button
+                onClick={() => restart()}
+                className="p-2 m-2 focus:outline-none"
+              >
                 <MdReplay></MdReplay>
               </button>
             </div>
-            <div className="flex-grow relative ">
+            <div className="flex-grow relative">
               <button
                 disabled={onTicking === "bottom" || isPaused || isEnd}
-                className={`block bg-white font-digital text-gray-600 text-9xl text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden ${
+                className={`block bg-white text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden ${
                   timerBottom <= 0 && "bg-red-400"
                 }`}
                 onClick={() => timerTopAction()}
               >
-                {timerBottom >= 60000 && getMinutes(timerBottom) + ":"}
-                {getSeconds(timerBottom)}
+                <span className="block transform rotate-90 font-digital text-gray-600 text-9xl">
+                  {timerBottom >= 60000 && getMinutes(timerBottom) + ":"}
+                  {getSeconds(timerBottom)}
+                </span>
               </button>
             </div>
           </div>
