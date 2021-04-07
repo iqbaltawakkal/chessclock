@@ -10,7 +10,7 @@ const Home = () => {
   const [isEnd, setIsEnd] = useState(false);
   const [onTicking, setOnTicking] = useState("");
   const [timerTop, setTimerTop] = useState(60000);
-  const [timerBottom, setTimerBottom] = useState(2200);
+  const [timerBottom, setTimerBottom] = useState(60000);
 
   const timerTopAction = () => {
     setOnTicking("bottom");
@@ -31,9 +31,13 @@ const Home = () => {
   };
 
   const restart = () => {
+    clearInterval(intervalTop);
+    clearInterval(intervalBottom);
     setTimerTop(60000);
     setTimerBottom(2200);
     setIsEnd(false);
+    setIsPaused(false);
+    setOnTicking("");
   };
 
   const getMinutes = (time) => {
@@ -75,7 +79,7 @@ const Home = () => {
     <>
       <main>
         <div className="max-w-lg mx-auto">
-          <div className="min-h-screen py-8 px-4 flex flex-col space-y-4 bg-gray-100">
+          <div className="min-h-screen py-4 px-4 flex flex-col space-y-4 bg-gray-100">
             <div className="flex-grow relative">
               <button
                 disabled={onTicking === "top" || isPaused || isEnd}
@@ -84,15 +88,25 @@ const Home = () => {
                 }`}
                 onClick={() => timerBottomAction()}
               >
-                <span className="block font-digital text-gray-600 text-9xl transform rotate-90">
-                  {timerTop >= 60000 && getMinutes(timerTop) + ":"}
-                  {getSeconds(timerTop)}
-                </span>
+                <svg
+                  className="font-digital text-gray-600 fill-current w-full h-full transform rotate-90"
+                  viewBox="0 0 50 50"
+                >
+                  <text
+                    x="50%"
+                    y="50%"
+                    dominantBaseline="middle"
+                    textAnchor="middle"
+                  >
+                    {timerTop >= 60000 && getMinutes(timerTop) + ":"}
+                    {getSeconds(timerTop)}
+                  </text>
+                </svg>
               </button>
             </div>
-            <div className="bg-white flex-grow-0 flex space-x-14 justify-center text-2xl border border-gray-200 rounded-lg px-4 text-center text-gray-400">
+            <div className="bg-white flex-grow-0 flex justify-around text-2xl border border-gray-200 rounded-lg px-4 text-center text-gray-400">
               <button
-                disabled={!onTicking}
+                disabled={!onTicking || isEnd}
                 onClick={() => setIsPaused(!isPaused)}
                 className="p-2 m-2 focus:outline-none"
               >
@@ -116,10 +130,20 @@ const Home = () => {
                 }`}
                 onClick={() => timerTopAction()}
               >
-                <span className="block transform rotate-90 font-digital text-gray-600 text-9xl">
-                  {timerBottom >= 60000 && getMinutes(timerBottom) + ":"}
-                  {getSeconds(timerBottom)}
-                </span>
+                <svg
+                  className="font-digital text-gray-600 fill-current w-full h-full transform rotate-90"
+                  viewBox="0 0 50 50"
+                >
+                  <text
+                    x="50%"
+                    y="50%"
+                    dominantBaseline="middle"
+                    textAnchor="middle"
+                  >
+                    {timerBottom >= 60000 && getMinutes(timerBottom) + ":"}
+                    {getSeconds(timerBottom)}
+                  </text>
+                </svg>
               </button>
             </div>
           </div>
