@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MdPlayArrow, MdReplay, MdSettings, MdPause } from "react-icons/md";
+import Time from "../components/Time";
 
 let intervalTop, intervalBottom;
 
@@ -40,16 +41,6 @@ const Home = () => {
     setOnTicking("");
   };
 
-  const getMinutes = (time) => {
-    return Math.floor(time / 60000);
-  };
-
-  const getSeconds = (time) => {
-    return time < 60000
-      ? (time - getMinutes(time) * 60000) / 1000
-      : Math.floor((time - getMinutes(time) * 60000) / 1000);
-  };
-
   useEffect(() => {
     if (isPaused) {
       clearInterval(intervalTop);
@@ -88,20 +79,7 @@ const Home = () => {
                 }`}
                 onClick={() => timerBottomAction()}
               >
-                <svg
-                  className="font-digital text-gray-600 fill-current w-full h-full transform rotate-90"
-                  viewBox="0 0 50 50"
-                >
-                  <text
-                    x="50%"
-                    y="50%"
-                    dominantBaseline="middle"
-                    textAnchor="middle"
-                  >
-                    {timerTop >= 60000 && getMinutes(timerTop) + ":"}
-                    {getSeconds(timerTop)}
-                  </text>
-                </svg>
+                <Time time={timerTop}></Time>
               </button>
             </div>
             <div className="bg-white flex-grow-0 flex justify-around text-2xl border border-gray-200 rounded-lg px-4 text-center text-gray-400">
@@ -130,20 +108,7 @@ const Home = () => {
                 }`}
                 onClick={() => timerTopAction()}
               >
-                <svg
-                  className="font-digital text-gray-600 fill-current w-full h-full transform rotate-90"
-                  viewBox="0 0 50 50"
-                >
-                  <text
-                    x="50%"
-                    y="50%"
-                    dominantBaseline="middle"
-                    textAnchor="middle"
-                  >
-                    {timerBottom >= 60000 && getMinutes(timerBottom) + ":"}
-                    {getSeconds(timerBottom)}
-                  </text>
-                </svg>
+                <Time time={timerBottom}></Time>
               </button>
             </div>
           </div>
