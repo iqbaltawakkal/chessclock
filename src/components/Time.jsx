@@ -8,7 +8,7 @@ const Time = (props) => {
 
   const getSeconds = (time) => {
     return time < 60000
-      ? (time - getMinutes(time) * 60000) / 1000
+      ? ((time - getMinutes(time) * 60000) / 1000).toFixed(1)
       : Math.floor((time - getMinutes(time) * 60000) / 1000);
   };
   return (
