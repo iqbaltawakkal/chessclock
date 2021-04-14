@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MdPlayArrow, MdReplay, MdSettings, MdPause } from "react-icons/md";
 import Time from "../components/Time";
+import { AppContext } from "../App";
 
 let intervalTop, intervalBottom;
 
 const Home = () => {
   const intervalTime = 100;
-  const increment = 0;
+  const context = useContext(AppContext);
+  const [timerTop, setTimerTop] = useState(context.state.timerTop);
+  const [timerBottom, setTimerBottom] = useState(context.state.timerTop);
+  const increment = context.state.increment;
+
   const [isPaused, setIsPaused] = useState(false);
   const [status, setStatus] = useState("");
-  const [timerTop, setTimerTop] = useState(60000);
-  const [timerBottom, setTimerBottom] = useState(60000);
 
   const timerTopAction = () => {
     setStatus("bottom");
@@ -30,13 +33,18 @@ const Home = () => {
     }, intervalTime);
   };
 
-  const restart = () => {
+  const restartAction = () => {
     clearInterval(intervalTop);
     clearInterval(intervalBottom);
-    setTimerTop(60000);
-    setTimerBottom(60000);
+    setTimerTop(context.state.timerTop);
+    setTimerBottom(context.state.timerTop);
     setIsPaused(false);
     setStatus("");
+  };
+
+  const settingAction = () => {
+    context.dispatch({ type: "isModalActive", payload: true });
+    setIsPaused(true);
   };
 
   useEffect(() => {
@@ -67,8 +75,8 @@ const Home = () => {
   return (
     <>
       <main>
-        <div className="max-w-lg mx-auto">
-          <div className="min-h-screen py-4 px-4 flex flex-col space-y-4 bg-gray-100">
+        <div className="bg-gray-100">
+          <div className="flex flex-col min-h-screen max-w-lg mx-auto py-4 px-4 space-y-4">
             <div className="flex-grow relative">
               <button
                 disabled={["top", "end"].includes(status) || isPaused}
@@ -77,7 +85,10 @@ const Home = () => {
                 }`}
                 onClick={() => timerBottomAction()}
               >
-                <Time time={timerTop}></Time>
+                <Time
+                  timerFacing={context.state.timerFacing}
+                  time={timerTop}
+                ></Time>
               </button>
             </div>
             <div className="bg-white flex-grow-0 flex justify-around text-2xl border border-gray-200 rounded-lg px-4 text-center text-gray-400">
@@ -88,11 +99,14 @@ const Home = () => {
               >
                 {isPaused ? <MdPlayArrow></MdPlayArrow> : <MdPause></MdPause>}
               </button>
-              <button className="p-4 focus:outline-none">
+              <button
+                onClick={() => settingAction()}
+                className="p-4 focus:outline-none"
+              >
                 <MdSettings></MdSettings>
               </button>
               <button
-                onClick={() => restart()}
+                onClick={() => restartAction()}
                 className="p-4 focus:outline-none"
               >
                 <MdReplay></MdReplay>
@@ -106,7 +120,10 @@ const Home = () => {
                 }`}
                 onClick={() => timerTopAction()}
               >
-                <Time time={timerBottom}></Time>
+                <Time
+                  timerFacing={context.state.timerFacing}
+                  time={timerBottom}
+                ></Time>
               </button>
             </div>
           </div>
