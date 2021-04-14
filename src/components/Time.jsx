@@ -14,7 +14,9 @@ const Time = (props) => {
   return (
     <>
       <svg
-        className="font-digital text-gray-600 fill-current w-full h-full transform rotate-90"
+        className={`font-digital text-gray-600 fill-current w-full h-full transform ${
+          props.timerFacing == "left" ? `rotate-90` : `-rotate-90`
+        }`}
         viewBox="0 0 50 50"
       >
         <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle">
@@ -28,6 +30,7 @@ const Time = (props) => {
 
 Time.propTypes = {
   time: PropTypes.number.isRequired,
+  timerFacing: PropTypes.string,
 };
 
 export default Time;
