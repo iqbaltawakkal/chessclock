@@ -73,63 +73,58 @@ const Home = () => {
   }, [timerTop, timerBottom]);
 
   return (
-    <>
-      <main>
-        <div className="bg-gray-100">
-          <div className="flex flex-col min-h-screen max-w-lg mx-auto py-4 px-4 space-y-4">
-            <div className="flex-grow relative">
-              <button
-                disabled={["top", "end"].includes(status) || isPaused}
-                className={`block bg-white  text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden  ${
-                  timerTop <= 0 && "bg-red-400"
-                }`}
-                onClick={() => timerBottomAction()}
-              >
-                <Time
-                  timerFacing={context.state.timerFacing}
-                  time={timerTop}
-                ></Time>
-              </button>
-            </div>
-            <div className="bg-white flex-grow-0 flex justify-around text-2xl border border-gray-200 rounded-lg px-4 text-center text-gray-400">
-              <button
-                disabled={!status || status == "end"}
-                onClick={() => setIsPaused(!isPaused)}
-                className="p-4 focus:outline-none"
-              >
-                {isPaused ? <MdPlayArrow></MdPlayArrow> : <MdPause></MdPause>}
-              </button>
-              <button
-                onClick={() => settingAction()}
-                className="p-4 focus:outline-none"
-              >
-                <MdSettings></MdSettings>
-              </button>
-              <button
-                onClick={() => restartAction()}
-                className="p-4 focus:outline-none"
-              >
-                <MdReplay></MdReplay>
-              </button>
-            </div>
-            <div className="flex-grow relative">
-              <button
-                disabled={["end", "bottom"].includes(status) || isPaused}
-                className={`block bg-white text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden ${
-                  timerBottom <= 0 && "bg-red-400"
-                }`}
-                onClick={() => timerTopAction()}
-              >
-                <Time
-                  timerFacing={context.state.timerFacing}
-                  time={timerBottom}
-                ></Time>
-              </button>
-            </div>
+    <main>
+      <div className="bg-gray-100">
+        <div className="flex flex-col min-h-screen max-w-lg mx-auto py-4 px-4 space-y-4">
+          <div className="flex-grow relative">
+            <button
+              disabled={["top", "end"].includes(status) || isPaused}
+              className={`block bg-white  text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden  ${
+                timerTop <= 0 && "bg-red-400"
+              }`}
+              onClick={() => timerBottomAction()}
+            >
+              <Time flipTimer={context.state.flipTimer} time={timerTop}></Time>
+            </button>
+          </div>
+          <div className="bg-white flex-grow-0 flex justify-around text-2xl border border-gray-200 rounded-lg px-4 text-center text-gray-400">
+            <button
+              disabled={!status || status == "end"}
+              onClick={() => setIsPaused(!isPaused)}
+              className="p-4 focus:outline-none"
+            >
+              {isPaused ? <MdPlayArrow></MdPlayArrow> : <MdPause></MdPause>}
+            </button>
+            <button
+              onClick={() => settingAction()}
+              className="p-4 focus:outline-none"
+            >
+              <MdSettings></MdSettings>
+            </button>
+            <button
+              onClick={() => restartAction()}
+              className="p-4 focus:outline-none"
+            >
+              <MdReplay></MdReplay>
+            </button>
+          </div>
+          <div className="flex-grow relative">
+            <button
+              disabled={["end", "bottom"].includes(status) || isPaused}
+              className={`block bg-white text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden ${
+                timerBottom <= 0 && "bg-red-400"
+              }`}
+              onClick={() => timerTopAction()}
+            >
+              <Time
+                flipTimer={context.state.flipTimer}
+                time={timerBottom}
+              ></Time>
+            </button>
           </div>
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   );
 };
 
