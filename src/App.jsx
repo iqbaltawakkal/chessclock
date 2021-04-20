@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import Modal from "./components/Modal";
 
 import Index from "./views/Index";
@@ -8,15 +8,29 @@ export const AppContext = React.createContext();
 function reducer(state, action) {
   switch (action.type) {
     case "timerTop":
-      return { ...state, timerTop: action.payload };
+      return {
+        ...state,
+        timerTop: action.payload,
+        updateComponent: state.updateComponent + 1,
+      };
     case "timerBottom":
-      return { ...state, timerBottom: action.payload };
+      return {
+        ...state,
+        timerBottom: action.payload,
+        updateComponent: state.updateComponent + 1,
+      };
     case "increment":
-      return { ...state, increment: action.payload };
+      return {
+        ...state,
+        increment: action.payload,
+        updateComponent: state.updateComponent + 1,
+      };
     case "isModalActive":
       return { ...state, isModalActive: action.payload };
-    case "timerFacing":
-      return { ...state, timerFacing: action.payload };
+    case "flipTimer":
+      return { ...state, flipTimer: action.payload };
+    case "darkMode":
+      return { ...state, darkMode: action.payload };
     default:
       return state;
   }
@@ -27,14 +41,24 @@ const App = () => {
     increment: 3000,
     timerTop: 180000,
     timerBottom: 180000,
-    timerFacing: "right",
+    darkMode: false,
+    flipTimer: false,
     isModalActive: false,
+    updateComponent: 1,
   });
+
+  useEffect(() => {
+    if (state.darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [state.darkMode]);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
-      <Index />
-      {state.isModalActive && <Modal />}
+      <Index key={state.updateComponent} />
+      <Modal show={state.isModalActive} />
     </AppContext.Provider>
   );
 };
