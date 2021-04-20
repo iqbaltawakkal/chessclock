@@ -1,6 +1,8 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
+  mode: "jit",
+  darkMode: "class",
   purge: {
     enabled: process.env.NODE_ENV === "production",
     safeList: [],
