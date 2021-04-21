@@ -15,7 +15,7 @@ const Time = (props) => {
     <>
       <svg
         className={`font-digital text-gray-600 fill-current w-full h-full transform ${
-          props.flipTimer ? `rotate-90` : `-rotate-90`
+          props.flipTimer ? `-rotate-90` : `rotate-90`
         }`}
         viewBox="0 0 50 50"
       >
