@@ -5,7 +5,7 @@ import { AppContext } from "../App";
 
 let intervalTop, intervalBottom;
 
-const Home = () => {
+const Index = () => {
   const intervalTime = 100;
   const context = useContext(AppContext);
   const [timerTop, setTimerTop] = useState(context.state.timerTop);
@@ -80,7 +80,7 @@ const Home = () => {
         <div className="flex-grow relative">
           <button
             disabled={["top", "end"].includes(status) || isPaused}
-            className={`block bg-white dark:bg-[#0D1117] text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden  ${
+            className={`block bg-white dark:bg-[#0D1117] border border-gray-200 dark:border-[#30363d] text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden  ${
               timerTop <= 0 && "bg-red-400"
             }`}
             onClick={() => timerBottomAction()}
@@ -112,7 +112,7 @@ const Home = () => {
         <div className="flex-grow relative">
           <button
             disabled={["end", "bottom"].includes(status) || isPaused}
-            className={`block bg-white dark:bg-[#0D1117] text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden ${
+            className={`block bg-white dark:bg-[#0D1117] border border-gray-200 dark:border-[#30363d] text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden ${
               timerBottom <= 0 && "bg-red-400"
             }`}
             onClick={() => timerTopAction()}
@@ -125,4 +125,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Index;
