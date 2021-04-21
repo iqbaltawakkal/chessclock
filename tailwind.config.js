@@ -1,6 +1,8 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
+  mode: "jit",
+  darkMode: "class",
   purge: {
     enabled: process.env.NODE_ENV === "production",
     safeList: [],
@@ -10,7 +12,8 @@ module.exports = {
     extend: {
       fontWeight: ["hover", "focus"],
       fontFamily: {
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+        sans: ["-apple-system", ...defaultTheme.fontFamily.sans],
+        digital: ["Digital"],
       },
     },
   },
