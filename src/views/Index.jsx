@@ -44,7 +44,9 @@ const Home = () => {
 
   const settingAction = () => {
     context.dispatch({ type: "isModalActive", payload: true });
-    setIsPaused(true);
+    if (status) {
+      setIsPaused(true);
+    }
   };
 
   useEffect(() => {
