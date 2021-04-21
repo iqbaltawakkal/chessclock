@@ -23,7 +23,7 @@ const Index = () => {
   });
 
   const timerTopAction = () => {
-    state.time + 0.1;
+    state.time + 0.2;
     controls.play();
     setStatus("bottom");
     clearInterval(intervalBottom);
@@ -34,7 +34,7 @@ const Index = () => {
   };
 
   const timerBottomAction = () => {
-    state.time + 0.1;
+    state.time + 0.2;
     controls.play();
     setStatus("top");
     clearInterval(intervalTop);
