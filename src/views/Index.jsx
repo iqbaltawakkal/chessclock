@@ -19,7 +19,7 @@ const Index = () => {
   // eslint-disable-next-line no-unused-vars
   const [audio, state, controls] = useAudio({
     src: "https://freesound.org/data/previews/414/414763_3094998-lq.mp3",
-    autoPlay: true,
+    autoPlay: false,
   });
 
   const timerTopAction = () => {
