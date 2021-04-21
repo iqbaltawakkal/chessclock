@@ -14,14 +14,16 @@ const SwitchCustom = (props) => {
         checked={props.value}
         onChange={props.onChange}
         className={`${
-          props.value ? "bg-blue-600" : "bg-gray-200"
+          props.value
+            ? "bg-gray-500 dark:bg-gray-800"
+            : "bg-gray-200 dark:bg-gray-500"
         } relative inline-flex flex-shrink-0 h-6 w-12 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer focus:outline-none focus-shadow-outline`}
       >
         {({ checked }) => (
           <span
             className={`${
               checked ? "translate-x-6" : "translate-x-0"
-            } inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full`}
+            } inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white dark:bg-[#C9D1D9] rounded-full`}
           />
         )}
       </Switch>

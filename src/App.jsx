@@ -56,10 +56,12 @@ const App = () => {
   }, [state.darkMode]);
 
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
-      <Index key={state.updateComponent} />
-      <Modal show={state.isModalActive} />
-    </AppContext.Provider>
+    <main className="dark:text-[#C9D1D9] bg-gray-200 dark:bg-[#090C10]">
+      <AppContext.Provider value={{ state, dispatch }}>
+        <Index key={state.updateComponent} />
+        <Modal show={state.isModalActive} />
+      </AppContext.Provider>
+    </main>
   );
 };
 
