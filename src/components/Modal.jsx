@@ -8,47 +8,56 @@ import { Transition, RadioGroup } from "@headlessui/react";
 const options = [
   {
     title: "1 Min",
-    subtitle: "",
+    subtitle: "Bullet",
     timer: 60000,
     increment: 0,
   },
   {
     title: "3 Min",
+    subtitle: "Blitz",
     timer: 180000,
     increment: 0,
   },
   {
     title: "5 Min",
+    subtitle: "Blitz",
     timer: 300000,
     increment: 0,
   },
   {
     title: "1 + 1",
+    subtitle: "Bullet",
     timer: 60000,
     increment: 1000,
   },
   {
     title: "2 + 1",
+    subtitle: "Bullet",
     timer: 120000,
     increment: 1000,
   },
   {
     title: "3 + 2",
+    subtitle: "Blitz",
     timer: 180000,
     increment: 2000,
   },
   {
     title: "10 Min",
+    subtitle: "Rapid",
     timer: 600000,
     increment: 0,
   },
   {
     title: "30 Min",
+    subtitle: "Classical",
     timer: 1800000,
     increment: 0,
   },
   {
     title: "Custom",
+    timer: 60000,
+    increment: 0,
   },
 ];
 
@@ -130,21 +139,17 @@ const Modal = (props) => {
                       ? "bg-gray-500 bg-opacity-75 text-white"
                       : "bg-white dark:bg-[#0D1117] border border-gray-200 dark:border-[#30363d]"
                   }
-                    relative h-24 flex items-center justify-center rounded-lg shadow-md px-5 py-4 cursor-pointer focus:outline-none`
+                    relative h-24 flex flex-col items-center justify-center rounded-lg shadow-md p-4 cursor-pointer focus:outline-none`
                         }
                       >
-                        {({ checked }) => (
+                        {
                           <>
-                            <RadioGroup.Label
-                              as="p"
-                              className={`font-medium text-center ${
-                                checked ? "text-white" : ""
-                              }`}
-                            >
+                            <RadioGroup.Label as="p" className="font-medium">
                               {option.title}
                             </RadioGroup.Label>
+                            <p className={`text-sm`}>{option.subtitle}</p>
                           </>
-                        )}
+                        }
                       </RadioGroup.Option>
                     ))}
                   </div>

@@ -12,7 +12,7 @@ module.exports = {
     extend: {
       fontWeight: ["hover", "focus"],
       fontFamily: {
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+        sans: ["-apple-system", ...defaultTheme.fontFamily.sans],
         digital: ["Digital"],
       },
     },
