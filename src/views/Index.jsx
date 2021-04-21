@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { MdPlayArrow, MdReplay, MdSettings, MdPause } from "react-icons/md";
 import Time from "../components/Time";
 import { AppContext } from "../App";
+import { useAudio } from "react-use";
 
 let intervalTop, intervalBottom;
 
@@ -15,7 +16,15 @@ const Index = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [status, setStatus] = useState("");
 
+  // eslint-disable-next-line no-unused-vars
+  const [audio, state, controls] = useAudio({
+    src: "https://freesound.org/data/previews/414/414763_3094998-lq.mp3",
+    autoPlay: true,
+  });
+
   const timerTopAction = () => {
+    state.time + 0.1;
+    controls.play();
     setStatus("bottom");
     clearInterval(intervalBottom);
     setTimerBottom((timerBottom) => timerBottom + increment);
@@ -25,6 +34,8 @@ const Index = () => {
   };
 
   const timerBottomAction = () => {
+    state.time + 0.1;
+    controls.play();
     setStatus("top");
     clearInterval(intervalTop);
     setTimerTop((timerTop) => timerTop + increment);
@@ -71,55 +82,55 @@ const Index = () => {
       clearInterval(intervalTop);
       clearInterval(intervalBottom);
       setStatus("end");
+      window.navigator.vibrate(1000);
     }
   }, [timerTop, timerBottom]);
 
   return (
-    <div className="">
-      <div className="flex flex-col min-h-screen max-w-lg mx-auto py-4 px-4 space-y-4">
-        <div className="flex-grow relative">
-          <button
-            disabled={["top", "end"].includes(status) || isPaused}
-            className={`block bg-white dark:bg-[#0D1117] border border-gray-200 dark:border-[#30363d] text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden  ${
-              timerTop <= 0 && "bg-red-400"
-            }`}
-            onClick={() => timerBottomAction()}
-          >
-            <Time flipTimer={context.state.flipTimer} time={timerTop}></Time>
-          </button>
-        </div>
-        <div className="bg-white dark:bg-[#0D1117] flex-grow-0 flex justify-around text-2xl border border-gray-200 dark:border-[#30363d] rounded-lg px-4 text-center text-gray-400">
-          <button
-            disabled={!status || status == "end"}
-            onClick={() => setIsPaused(!isPaused)}
-            className="p-4 focus:outline-none"
-          >
-            {isPaused ? <MdPlayArrow></MdPlayArrow> : <MdPause></MdPause>}
-          </button>
-          <button
-            onClick={() => settingAction()}
-            className="p-4 focus:outline-none"
-          >
-            <MdSettings></MdSettings>
-          </button>
-          <button
-            onClick={() => restartAction()}
-            className="p-4 focus:outline-none"
-          >
-            <MdReplay></MdReplay>
-          </button>
-        </div>
-        <div className="flex-grow relative">
-          <button
-            disabled={["end", "bottom"].includes(status) || isPaused}
-            className={`block bg-white dark:bg-[#0D1117] border border-gray-200 dark:border-[#30363d] text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden ${
-              timerBottom <= 0 && "bg-red-400"
-            }`}
-            onClick={() => timerTopAction()}
-          >
-            <Time flipTimer={context.state.flipTimer} time={timerBottom}></Time>
-          </button>
-        </div>
+    <div className="flex flex-col min-h-screen max-w-lg mx-auto py-4 px-4 space-y-4">
+      {audio}
+      <div className="flex-grow relative">
+        <button
+          disabled={["top", "end"].includes(status) || isPaused}
+          className={`block bg-white dark:bg-[#0D1117] border border-gray-200 dark:border-[#30363d] text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden  ${
+            timerTop <= 0 && "bg-red-400"
+          }`}
+          onClick={() => timerBottomAction()}
+        >
+          <Time flipTimer={context.state.flipTimer} time={timerTop}></Time>
+        </button>
+      </div>
+      <div className="bg-white dark:bg-[#0D1117] flex-grow-0 flex justify-around text-2xl border border-gray-200 dark:border-[#30363d] rounded-lg px-4 text-center text-gray-400">
+        <button
+          disabled={!status || status == "end"}
+          onClick={() => setIsPaused(!isPaused)}
+          className="p-4 focus:outline-none"
+        >
+          {isPaused ? <MdPlayArrow></MdPlayArrow> : <MdPause></MdPause>}
+        </button>
+        <button
+          onClick={() => settingAction()}
+          className="p-4 focus:outline-none"
+        >
+          <MdSettings></MdSettings>
+        </button>
+        <button
+          onClick={() => restartAction()}
+          className="p-4 focus:outline-none"
+        >
+          <MdReplay></MdReplay>
+        </button>
+      </div>
+      <div className="flex-grow relative">
+        <button
+          disabled={["end", "bottom"].includes(status) || isPaused}
+          className={`block bg-white dark:bg-[#0D1117] border border-gray-200 dark:border-[#30363d] text-center w-full shadow-xl rounded-lg outline-none focus:outline-none focus:shadow-sm absolute top-0 bottom-0 overflow-hidden ${
+            timerBottom <= 0 && "bg-red-400"
+          }`}
+          onClick={() => timerTopAction()}
+        >
+          <Time flipTimer={context.state.flipTimer} time={timerBottom}></Time>
+        </button>
       </div>
     </div>
   );
