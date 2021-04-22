@@ -106,7 +106,18 @@ const Base = () => {
           onClick={() => setIsPaused(!isPaused)}
           className="p-4 focus:outline-none"
         >
-          {isPaused ? <MdPlayArrow></MdPlayArrow> : <MdPause></MdPause>}
+          {isPaused ? (
+            <span className="flex">
+              <span className="animate-ping absolute inline-flex">
+                <MdPlayArrow></MdPlayArrow>
+              </span>
+              <span className="relative inline-flex">
+                <MdPlayArrow></MdPlayArrow>
+              </span>
+            </span>
+          ) : (
+            <MdPause></MdPause>
+          )}
         </button>
         <button
           onClick={() => settingAction()}
