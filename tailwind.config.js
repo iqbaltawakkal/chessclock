@@ -1,11 +1,20 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+  mode: "jit",
+  purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "class", // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      fontWeight: ["hover", "focus"],
+      fontFamily: {
+        sans: ["-apple-system", ...defaultTheme.fontFamily.sans],
+        digital: ["Digital"],
+      },
+    },
   },
   variants: {
     extend: {},
   },
   plugins: [],
-}
+};

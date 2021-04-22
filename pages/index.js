@@ -1,65 +1,70 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Modal from "../components/Modal";
+import Base from "../components/Base";
+import React, { useReducer, useEffect } from "react";
+
+export const AppContext = React.createContext();
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "timerTop":
+      return {
+        ...state,
+        timerTop: action.payload,
+        updateComponent: state.updateComponent + 1,
+      };
+    case "timerBottom":
+      return {
+        ...state,
+        timerBottom: action.payload,
+        updateComponent: state.updateComponent + 1,
+      };
+    case "increment":
+      return {
+        ...state,
+        increment: action.payload,
+        updateComponent: state.updateComponent + 1,
+      };
+    case "isModalActive":
+      return { ...state, isModalActive: action.payload };
+    case "flipTimer":
+      return { ...state, flipTimer: action.payload };
+    case "darkMode":
+      return { ...state, darkMode: action.payload };
+    default:
+      return state;
+  }
+}
 
 export default function Home() {
+  const [state, dispatch] = useReducer(reducer, {
+    increment: 3000,
+    timerTop: 180000,
+    timerBottom: 180000,
+    darkMode: false,
+    flipTimer: false,
+    isModalActive: false,
+    updateComponent: 1,
+  });
+
+  useEffect(() => {
+    if (state.darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [state.darkMode]);
+
   return (
-    <div className={styles.container}>
+    <main className="dark:text-[#C9D1D9] bg-gray-200 dark:bg-[#090C10]">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+      <AppContext.Provider value={{ state, dispatch }}>
+        <Base key={state.updateComponent} />
+        <Modal show={state.isModalActive} />
+      </AppContext.Provider>
+    </main>
+  );
 }
