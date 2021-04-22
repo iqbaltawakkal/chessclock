@@ -58,7 +58,7 @@ export default function Home() {
   return (
     <main className="dark:text-[#C9D1D9] bg-gray-200 dark:bg-[#090C10]">
       <Head>
-        <title>Create Next App</title>
+        <title>Chess clock</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppContext.Provider value={{ state, dispatch }}>
