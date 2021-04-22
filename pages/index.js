@@ -64,13 +64,9 @@ export default function Home() {
           content="initial-scale=1.0, width=device-width"
           key="viewport"
         />
-        <meta charset="UTF-8"></meta>
+        <meta charSet="UTF-8"></meta>
         <meta name="description" content="Simple chess clock online."></meta>
         <meta name="robots" content="index, follow"></meta>
-        <meta
-          httpEquiv="refresh"
-          content="5;url=http://chessclockonline.com/"
-        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppContext.Provider value={{ state, dispatch }}>
