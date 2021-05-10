@@ -154,9 +154,9 @@ const Modal = (props) => {
             <div className="fixed h-auto max-w-full bottom-0 right-0 left-0 bg-white dark:bg-[#090C10] overflow-hidden">
               <div className="mx-auto max-w-lg w-full min-h-screen overflow-x-auto">
                 <div className="flex justify-between border-b border-gray-200 dark:border-[#30363d] py-4 mx-4">
-                  <p className="text-xl"> Preference</p>
+                  <p className="text-xl font-medium"> Preference</p>
                   <button onClick={() => close()}>
-                    <MdClose className="text-2xl mr-2"> </MdClose>
+                    <MdClose className="text-2xl"> </MdClose>
                   </button>
                 </div>
                 <div
