@@ -10,7 +10,7 @@ const Base = () => {
   const intervalTime = 100;
   const context = useContext(AppContext);
   const [timerTop, setTimerTop] = useState(context.state.timerTop);
-  const [timerBottom, setTimerBottom] = useState(context.state.timerTop);
+  const [timerBottom, setTimerBottom] = useState(context.state.timerBottom);
   const increment = context.state.increment;
 
   const [isPaused, setIsPaused] = useState(false);
@@ -88,7 +88,6 @@ const Base = () => {
 
   return (
     <div className="flex flex-col min-h-screen max-w-lg mx-auto py-4 px-4 space-y-4">
-      {audio}
       <div className="flex-grow relative">
         <button
           disabled={["top", "end"].includes(status) || isPaused}
@@ -100,6 +99,7 @@ const Base = () => {
           <Time flipTimer={context.state.flipTimer} time={timerTop}></Time>
         </button>
       </div>
+      {audio}
       <div className="bg-white dark:bg-[#0D1117] flex-grow-0 flex justify-around text-2xl border border-gray-200 dark:border-[#30363d] rounded-lg px-4 text-center text-gray-400">
         <button
           disabled={!status || status == "end"}
