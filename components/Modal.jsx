@@ -4,6 +4,7 @@ import { AppContext } from "../pages/index";
 import PropTypes from "prop-types";
 import { MdClose } from "react-icons/md";
 import { Transition, RadioGroup } from "@headlessui/react";
+import SelectTime from "../components/SelectTime";
 
 const options = [
   {
@@ -67,6 +68,9 @@ const Modal = (props) => {
   const [flipTimer, setFlipTimer] = useState(context.state.flipTimer);
   const [showContent, setShowContent] = useState(false);
   const [selected, setSelected] = useState(options[0]);
+  const [timerTop, setTimerTop] = useState(context.state.timerTop);
+  const [timerBottom, setTimerBottom] = useState(context.state.timerBottom);
+  const [increment, setIncrement] = useState(context.state.increment);
 
   useEffect(() => {
     context.dispatch({ type: "darkMode", payload: darkMode });
@@ -77,9 +81,14 @@ const Modal = (props) => {
   }, [flipTimer]);
 
   useEffect(() => {
-    context.dispatch({ type: "increment", payload: selected.increment });
-    context.dispatch({ type: "timerTop", payload: selected.timer });
-    context.dispatch({ type: "timerBottom", payload: selected.timer });
+    if (selected.title !== "Custom") {
+      context.dispatch({ type: "increment", payload: selected.increment });
+      context.dispatch({ type: "timerTop", payload: selected.timer });
+      context.dispatch({ type: "timerBottom", payload: selected.timer });
+    }
+    setTimerBottom(selected.timer);
+    setTimerTop(selected.timer);
+    setIncrement(selected.increment);
   }, [selected]);
 
   useEffect(() => {
@@ -97,6 +106,29 @@ const Modal = (props) => {
     setTimeout(() => {
       context.dispatch({ type: "isModalActive", payload: false });
     }, 200);
+  };
+
+  const getMinutes = (time) => {
+    return Math.floor(time / 60000);
+  };
+
+  const getSeconds = (time) => {
+    return time < 60000
+      ? (time - getMinutes(time) * 60000) / 1000
+      : Math.floor((time - getMinutes(time) * 60000) / 1000);
+  };
+
+  const setCustomTimer = (type, timer) => {
+    if (type === "timerBottom") {
+      setTimerBottom(timer);
+    } else {
+      setTimerTop(timer);
+    }
+
+    context.dispatch({
+      type,
+      payload: timer,
+    });
   };
 
   return (
@@ -126,7 +158,7 @@ const Modal = (props) => {
                   <div className="grid grid-cols-3 gap-3">
                     {options.map((option) => (
                       <RadioGroup.Option
-                        key={option.name}
+                        key={option.title}
                         value={option}
                         className={({ active, checked }) =>
                           `${
@@ -144,16 +176,92 @@ const Modal = (props) => {
                       >
                         {
                           <>
-                            <RadioGroup.Label as="p" className="font-medium">
+                            <RadioGroup.Label
+                              key={option.title}
+                              as="p"
+                              className="font-medium"
+                            >
                               {option.title}
                             </RadioGroup.Label>
-                            <p className={`text-sm`}>{option.subtitle}</p>
+                            <p className="text-sm">{option.subtitle}</p>
                           </>
                         }
                       </RadioGroup.Option>
                     ))}
                   </div>
                 </RadioGroup>
+
+                {selected.title === "Custom" && (
+                  <>
+                    <div className="flex justify-between">
+                      <span>Timer #1</span>
+                      <div>
+                        <SelectTime
+                          max={100}
+                          value={getMinutes(timerTop)}
+                          onChange={(e) => {
+                            setCustomTimer(
+                              "timerTop",
+                              getSeconds(timerTop) * 1000 +
+                                e.target.value * 60000
+                            );
+                          }}
+                        />
+                        <span className="mx-2">:</span>
+                        <SelectTime
+                          max={60}
+                          value={getSeconds(timerTop)}
+                          onChange={(e) => {
+                            setCustomTimer(
+                              "timerTop",
+                              timerTop + e.target.value * 1000
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Timer #2</span>
+                      <div>
+                        <SelectTime
+                          max={100}
+                          value={getMinutes(timerBottom)}
+                          onChange={(e) => {
+                            setCustomTimer(
+                              "timerBottom",
+                              getSeconds(timerBottom) * 1000 +
+                                e.target.value * 60000
+                            );
+                          }}
+                        />
+                        <span className="mx-2">:</span>
+                        <SelectTime
+                          max={60}
+                          value={getSeconds(timerBottom)}
+                          onChange={(e) => {
+                            setCustomTimer(
+                              "timerBottom",
+                              timerBottom + e.target.value * 1000
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Increment </span>
+                      <SelectTime
+                        max={60}
+                        value={increment}
+                        onChange={(e) =>
+                          context.dispatch({
+                            type: "increment",
+                            payload: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                  </>
+                )}
                 <SwitchCustom
                   label="Dark Mode"
                   value={darkMode}
