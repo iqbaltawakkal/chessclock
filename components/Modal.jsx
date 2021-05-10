@@ -140,7 +140,7 @@ const Modal = (props) => {
   return (
     <>
       {props.show && (
-        <div className="fixed z-50 top-0 bottom-0 left-0 right-0 w-full overflow-auto">
+        <div className="fixed z-50 top-0 bottom-0 left-0 right-0 w-full">
           <Transition
             as={Fragment}
             show={showContent}
@@ -160,7 +160,7 @@ const Modal = (props) => {
                   </button>
                 </div>
                 <div
-                  className="space-y-4 overflow-y-scroll px-4 pt-4 pb-8"
+                  className="space-y-4 overflow-y-auto px-4 pt-4 pb-8"
                   style={{ height: "calc(100vh - 61px)" }}
                 >
                   <RadioGroup value={selected} onChange={setSelected}>
