@@ -152,15 +152,15 @@ const Modal = (props) => {
             leaveTo="max-h-0"
           >
             <div className="fixed h-auto max-w-full bottom-0 right-0 left-0 bg-white dark:bg-[#090C10] overflow-hidden">
-              <div className="mx-auto max-w-lg w-full min-h-screen px-4 ">
-                <div className="flex justify-between border-b border-gray-200 dark:border-[#30363d] py-4">
+              <div className="mx-auto max-w-lg w-full min-h-screen overflow-x-auto">
+                <div className="flex justify-between border-b border-gray-200 dark:border-[#30363d] py-4 mx-4">
                   <p className="text-xl"> Preference</p>
                   <button onClick={() => close()}>
                     <MdClose className="text-2xl mr-2"> </MdClose>
                   </button>
                 </div>
                 <div
-                  className="space-y-4 overflow-x-auto pt-4 pb-8"
+                  className="space-y-4 overflow-y-scroll px-4 pt-4 pb-8"
                   style={{ height: "calc(100vh - 61px)" }}
                 >
                   <RadioGroup value={selected} onChange={setSelected}>
@@ -270,12 +270,13 @@ const Modal = (props) => {
                       <SelectTime
                         max={60}
                         value={increment}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                          setIncrement(e.target.value);
                           context.dispatch({
                             type: "increment",
-                            payload: e.target.value,
-                          })
-                        }
+                            payload: parseInt(e.target.value * 1000),
+                          });
+                        }}
                       />
                     </div>
                   </Transition>
