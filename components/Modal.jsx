@@ -67,6 +67,7 @@ const Modal = (props) => {
   const [darkMode, setDarkMode] = useState(context.state.darkMode);
   const [flipTimer, setFlipTimer] = useState(context.state.flipTimer);
   const [showContent, setShowContent] = useState(false);
+  const [showCustom, setShowCustom] = useState(false);
   const [selected, setSelected] = useState(options[0]);
   const [timerTop, setTimerTop] = useState(context.state.timerTop);
   const [timerBottom, setTimerBottom] = useState(context.state.timerBottom);
@@ -85,6 +86,11 @@ const Modal = (props) => {
       context.dispatch({ type: "increment", payload: selected.increment });
       context.dispatch({ type: "timerTop", payload: selected.timer });
       context.dispatch({ type: "timerBottom", payload: selected.timer });
+      setShowCustom(false);
+    } else {
+      setTimeout(() => {
+        setShowCustom(true);
+      }, 200);
     }
     setTimerBottom(selected.timer);
     setTimerTop(selected.timer);
@@ -146,54 +152,66 @@ const Modal = (props) => {
             leaveTo="max-h-0"
           >
             <div className="fixed h-auto max-w-full bottom-0 right-0 left-0 bg-white dark:bg-[#090C10] overflow-hidden">
-              <div className="mx-auto max-w-lg overflow-x-auto w-full min-h-screen px-4 space-y-4 ">
-                <div className="flex border-b border-gray-200 dark:border-[#30363d] py-4 ">
+              <div className="mx-auto max-w-lg w-full min-h-screen px-4 ">
+                <div className="flex justify-between border-b border-gray-200 dark:border-[#30363d] py-4">
+                  <p className="text-xl"> Preference</p>
                   <button onClick={() => close()}>
                     <MdClose className="text-2xl mr-2"> </MdClose>
                   </button>
-                  <p className="text-xl"> Preference</p>
                 </div>
-
-                <RadioGroup value={selected} onChange={setSelected}>
-                  <div className="grid grid-cols-3 gap-3">
-                    {options.map((option) => (
-                      <RadioGroup.Option
-                        key={option.title}
-                        value={option}
-                        className={({ active, checked }) =>
-                          `${
-                            active
-                              ? "ring-2 ring-offset-2 ring-offset-gray-200 ring-white ring-opacity-60"
-                              : ""
-                          }
+                <div
+                  className="space-y-4 overflow-x-auto pt-4 pb-8"
+                  style={{ height: "calc(100vh - 61px)" }}
+                >
+                  <RadioGroup value={selected} onChange={setSelected}>
+                    <div className="grid grid-cols-3 gap-3">
+                      {options.map((option) => (
+                        <RadioGroup.Option
+                          key={option.title}
+                          value={option}
+                          className={({ active, checked }) =>
+                            `${
+                              active
+                                ? "ring-2 ring-offset-2 ring-offset-gray-200 ring-white ring-opacity-60"
+                                : ""
+                            }
                   ${
                     checked
                       ? "bg-gray-500 bg-opacity-75 text-white"
                       : "bg-white dark:bg-[#0D1117] border border-gray-200 dark:border-[#30363d]"
                   }
                     relative h-24 flex flex-col items-center justify-center rounded-lg shadow-md p-4 cursor-pointer focus:outline-none`
-                        }
-                      >
-                        {
-                          <>
-                            <RadioGroup.Label
-                              key={option.title}
-                              as="p"
-                              className="font-medium"
-                            >
-                              {option.title}
-                            </RadioGroup.Label>
-                            <p className="text-sm">{option.subtitle}</p>
-                          </>
-                        }
-                      </RadioGroup.Option>
-                    ))}
-                  </div>
-                </RadioGroup>
+                          }
+                        >
+                          {
+                            <>
+                              <RadioGroup.Label
+                                key={option.title}
+                                as="p"
+                                className="font-medium"
+                              >
+                                {option.title}
+                              </RadioGroup.Label>
+                              <p className="text-sm">{option.subtitle}</p>
+                            </>
+                          }
+                        </RadioGroup.Option>
+                      ))}
+                    </div>
+                  </RadioGroup>
 
-                {selected.title === "Custom" && (
-                  <>
-                    <div className="flex justify-between">
+                  <Transition
+                    as="div"
+                    show={showCustom}
+                    enter="transform duration-500"
+                    enterFrom="max-h-0"
+                    enterTo="max-h-full"
+                    leave="transform"
+                    leaveFrom="max-h-full"
+                    leaveTo="max-h-0"
+                    className="space-y-4"
+                  >
+                    <div className="flex justify-between ">
                       <span>Timer #1</span>
                       <div>
                         <SelectTime
@@ -260,18 +278,19 @@ const Modal = (props) => {
                         }
                       />
                     </div>
-                  </>
-                )}
-                <SwitchCustom
-                  label="Dark Mode"
-                  value={darkMode}
-                  onChange={() => setDarkMode(!darkMode)}
-                />
-                <SwitchCustom
-                  label="Flip Timer"
-                  value={flipTimer}
-                  onChange={() => setFlipTimer(!flipTimer)}
-                />
+                  </Transition>
+
+                  <SwitchCustom
+                    label="Dark Mode"
+                    value={darkMode}
+                    onChange={() => setDarkMode(!darkMode)}
+                  />
+                  <SwitchCustom
+                    label="Flip Timer"
+                    value={flipTimer}
+                    onChange={() => setFlipTimer(!flipTimer)}
+                  />
+                </div>
               </div>
             </div>
           </Transition>
