@@ -38,9 +38,9 @@ function reducer(state, action) {
 
 export default function Home() {
   const [state, dispatch] = useReducer(reducer, {
-    increment: 3000,
-    timerTop: 180000,
-    timerBottom: 180000,
+    increment: 0,
+    timerTop: 0,
+    timerBottom: 0,
     darkMode: false,
     flipTimer: false,
     isModalActive: false,
