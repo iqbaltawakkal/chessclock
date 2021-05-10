@@ -48,7 +48,7 @@ const Base = () => {
     clearInterval(intervalTop);
     clearInterval(intervalBottom);
     setTimerTop(context.state.timerTop);
-    setTimerBottom(context.state.timerTop);
+    setTimerBottom(context.state.timerBottom);
     setIsPaused(false);
     setStatus("");
   };
