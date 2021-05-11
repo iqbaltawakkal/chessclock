@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 define("./workbox-6b19f60b.js",['exports'], function (exports) { 'use strict';
 
     try {

@@ -67,6 +67,21 @@ export default function Home() {
         <meta charSet="UTF-8"></meta>
         <meta name="description" content="Simple chess clock online."></meta>
         <meta name="robots" content="index, follow"></meta>
+        <link rel="manifest" href="/manifest.json" />
+        <link
+          href="/icons/icon-16x16.png"
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+        />
+        <link
+          href="/icons/icon-32x32.png"
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+        />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png"></link>
+        <meta name="theme-color" content="#FFFFFF" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppContext.Provider value={{ state, dispatch }}>
