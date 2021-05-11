@@ -10,6 +10,7 @@ Simple Chess Clock for Mobile, for the one who want to play on board!
 - Various time types (bullet, rapid, blitz, classical & custom).
 - Flip timer.
 - Night Mode.
+- Progressive Web App (PWA) Support!
 
 # Stack
 
