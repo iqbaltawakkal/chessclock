@@ -2,8 +2,8 @@
 
 Simple Chess Clock for Mobile, for the one who want to play on board!
 
-🔗🔗 [chessclockonline.com](https://chessclockonline.com)
-
+🔗🔗 [https://chessclock.vercel.app/](https://chessclock.vercel.app/)
+ 
 # Feature
 
 - Accurate timestamp.
