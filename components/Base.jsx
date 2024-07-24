@@ -77,13 +77,13 @@ const Base = () => {
     }
   }, [isPaused]);
 
-  const canVibrate = window.navigator.vibrate
   useEffect(() => {
     if (timerTop <= 0 || timerBottom <= 0) {
       clearInterval(intervalTop);
       clearInterval(intervalBottom);
       setStatus("end");
-      if(canVibrate) window.navigator.vibrate(1000)
+      const canVibrate = window.navigator.vibrate;
+      if (canVibrate) window.navigator.vibrate(1000);
     }
   }, [timerTop, timerBottom]);
 
