@@ -1,42 +1,31 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-const SelectTime = ({ name, placeholder, onChange, className, value, max }) => {
+const SelectTime = ({
+  name,
+  onChange,
+  className = "",
+  value = 0,
+  max = 60,
+  ariaLabel = "Select time",
+}) => {
   return (
     <select
       id={name}
       name={name}
-      placeholder={placeholder}
+      aria-label={ariaLabel}
       onChange={onChange}
       value={value}
-      className={`appearance-none bg-gray-200 dark:bg-gray-500 px-4 rounded-md ${className}`}
+      className={`bg-gray-100 dark:bg-[#161b22] text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-[#30363d] px-3 py-1.5 rounded-lg text-base font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-colors cursor-pointer ${className}`}
     >
-      {[...Array(max)].map((value, index) => {
+      {[...Array(max)].map((_, index) => {
         return (
           <option key={index} value={index}>
-            {index < 10 && "0"}
-            {index}
+            {index < 10 ? `0${index}` : index}
           </option>
         );
       })}
     </select>
   );
-};
-
-SelectTime.defaultProps = {
-  type: "text",
-  className: "",
-};
-
-SelectTime.propTypes = {
-  name: PropTypes.string,
-  type: PropTypes.string,
-  placeholder: PropTypes.string,
-  className: PropTypes.string,
-  value: PropTypes.any,
-  onChange: PropTypes.func,
-  label: PropTypes.string,
-  max: PropTypes.number,
 };
 
 export default SelectTime;
